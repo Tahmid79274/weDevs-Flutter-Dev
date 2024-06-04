@@ -8,5 +8,6 @@ abstract class AppStyle{
   static const TextStyle styleNormalSlateGray25 = TextStyle(fontWeight: FontWeight.normal, color: AppColors.slateGray, fontSize: AppConstant.size25);
   static const TextStyle styleNormalSlateGray15 = TextStyle(fontWeight: FontWeight.normal, color: AppColors.slateGray, fontSize: AppConstant.size15);
   static const TextStyle styleNormalWhite25 = TextStyle(fontWeight: FontWeight.normal, color: AppColors.white, fontSize: AppConstant.size25);
-  static const TextStyle styleNormalOuterSpace25 = TextStyle(fontWeight: FontWeight.normal,color: AppColors.outerSpace,fontSize: AppConstant.size25,);
+  static const TextStyle styleNormalOuterSpace20 = TextStyle(fontWeight: FontWeight.normal,color: AppColors.outerSpace,fontSize: AppConstant.size20,);
+  static const TextStyle styleBoldCurious20 = TextStyle(fontWeight: FontWeight.bold,color: AppColors.curiousBlue,fontSize: AppConstant.size20,);
 }

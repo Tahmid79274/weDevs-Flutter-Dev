@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../utils/values/app_constant.dart';
 class CustomLogoWidget extends StatelessWidget {
-  const CustomLogoWidget({super.key});
+  String imagePath;
+  double width;
+  CustomLogoWidget({super.key,required this.imagePath,required this.width});
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(AppConstant.dokanLogoPath,width: 200);
+    return Image.asset(imagePath,width: width,height: 120,);
   }
 }

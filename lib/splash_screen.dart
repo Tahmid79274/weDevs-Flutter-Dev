@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './components/custom_widget/custom_logo_widget.dart';
 import './utils/color/app_color.dart';
 import './screens/auth/sign_in_screen.dart';
+import 'utils/values/app_constant.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,12 +24,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.white,
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: CustomLogoWidget(),
+          child: CustomLogoWidget(
+            width: AppConstant.size200,
+            imagePath: AppConstant.dokanLogoPath,
+          ),
         ),
       ),
     );

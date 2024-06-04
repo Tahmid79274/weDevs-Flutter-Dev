@@ -7,55 +7,68 @@ import '../custom_view/custom_icon_view.dart';
 
 class CustomTextField extends StatelessWidget {
   TextEditingController controller;
-  String hint,imagePath;
-  CustomTextField({super.key,required this.controller,required this.hint,required this.imagePath});
+  String hint, imagePath;
+  CustomTextField(
+      {super.key,
+      required this.controller,
+      required this.hint,
+      required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
-    return CustomBoxShadowTextField(
+    return CustomBoxShadow(
       child: TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(AppConstant.emailLogoPath, width: 5, ),
-          ),
-          // prefix: Image.asset(AppConstant.emailLogoPath,color: Colors.red,width: 20,),
-          // prefixIconColor: Colors.red,
-          hintText: hint,
-          hintStyle: AppStyle.styleNormalSlateGray25,
-          border: InputBorder.none
+        controller: controller,
+        decoration: InputDecoration(
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                imagePath,
+                width: 5,
+              ),
+            ),
+            // prefix: Image.asset(AppConstant.emailLogoPath,color: Colors.red,width: 20,),
+            // prefixIconColor: Colors.red,
+            hintText: hint,
+            hintStyle: AppStyle.styleNormalSlateGray25,
+            border: InputBorder.none),
       ),
-    ),
     );
   }
 }
 
-
 class CustomPasswordField extends StatelessWidget {
   TextEditingController controller;
-  String hint,imagePath;
+  String hint, imagePath;
   IconData icon;
+  bool showPasswordText;
   VoidCallback showPasswordFunction;
-  CustomPasswordField({super.key,required this.controller,required this.hint,required this.imagePath,required this.icon,required this.showPasswordFunction});
+  CustomPasswordField(
+      {super.key,
+      required this.controller,
+      required this.hint,
+      required this.imagePath,
+      required this.icon,
+      required this.showPasswordText,
+      required this.showPasswordFunction});
 
   @override
   Widget build(BuildContext context) {
-    return CustomBoxShadowTextField(
+    return CustomBoxShadow(
       child: TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-          prefixIcon: CustomIconView(
-            imagePath: AppConstant.emailLogoPath,
-          ),
-          suffixIcon: Icon(icon),
-          // prefix: Image.asset(AppConstant.emailLogoPath,color: Colors.red,width: 20,),
-          // prefixIconColor: Colors.red,
-          hintText: hint,
-          hintStyle: AppStyle.styleNormalSlateGray25,
-          border: InputBorder.none
+        controller: controller,
+        obscureText: showPasswordText,
+        decoration: InputDecoration(
+            prefixIcon: CustomIconView(
+              imagePath: imagePath,
+            ),
+            suffixIcon: IconButton(icon: Icon(icon),onPressed: showPasswordFunction,),
+            // prefix: Image.asset(AppConstant.emailLogoPath,color: Colors.red,width: 20,),
+            // prefixIconColor: Colors.red,
+            hintText: hint,
+            hintStyle: AppStyle.styleNormalSlateGray25,
+            border: InputBorder.none),
       ),
-    ),
     );
   }
 }

@@ -27,6 +27,13 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
+  bool showPass = false;
+  void showPasswordOrNot(){
+    setState(() {
+      showPass=!showPass;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return SizedBox(
       // color: Colors.green,
       width: double.infinity,
+      height: double.infinity,
       child: Column(
         // direction: Axis.vertical,
         mainAxisSize: MainAxisSize.max,
@@ -49,7 +57,10 @@ class _SignInScreenState extends State<SignInScreen> {
           SizedBox(
             height: 50,
           ),
-          CustomLogoWidget(),
+          CustomLogoWidget(
+            width: AppConstant.size200,
+            imagePath: AppConstant.dokanLogoPath,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -85,8 +96,9 @@ class _SignInScreenState extends State<SignInScreen> {
           controller: passwordController,
           hint: AppString.passwordPlainText,
           imagePath: AppConstant.passwordLogoPath,
-          icon: Icons.add,
-          showPasswordFunction: () {},
+          icon: showPass?Icons.visibility_off:Icons.visibility,
+          showPasswordText: !showPass,
+          showPasswordFunction: showPasswordOrNot,
         ),
         Align(
             alignment: Alignment.topRight,
@@ -94,7 +106,9 @@ class _SignInScreenState extends State<SignInScreen> {
         SizedBox(
           height: AppConstant.size25,
         ),
-        CustomButton(onTapAction: (){
+        CustomButton(
+          content: AppString.logInPlainText,
+          onTapAction: (){
 
         },),
       ],
@@ -113,6 +127,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget createNewAccountSection(){
     return TextButton(onPressed: (){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
-    }, child: Text(AppString.createNewAccountPlainText,style: AppStyle.styleNormalOuterSpace25,));
+    }, child: Text(AppString.createNewAccountPlainText,style: AppStyle.styleNormalOuterSpace20,));
   }
 }
