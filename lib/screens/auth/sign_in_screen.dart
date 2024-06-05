@@ -8,7 +8,7 @@ import '../../utils/color/app_color.dart';
 import '../../components/custom_widget/custom_logo_widget.dart';
 import '../../components/custom_widget/custom_text_field.dart';
 import '../../utils/values/app_constant.dart';
-
+import '../home/base_screen.dart';
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -109,7 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
         CustomButton(
           content: AppString.logInPlainText,
           onTapAction: (){
-
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const BaseScreen()),);
         },),
       ],
     );

@@ -6,7 +6,8 @@ abstract class AppConstant {
   static const String passwordLogoPath = '$imageBasePath/password_logo.png';
   static const String fbLogoPath = '$imageBasePath/facebook_logo.png';
   static const String googleLogoPath = '$imageBasePath/google_logo.png';
-  static const String personPath = '$imageBasePath/person_logo.png';
+  static const String personLogoPath = '$imageBasePath/person_logo.png';
+  static const String filterLogoPath = '$imageBasePath/filter_logo.png';
 
   //size
   static const double size10 = 10.0;

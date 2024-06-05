@@ -9,4 +9,7 @@ abstract class AppString{
   static const String createNewAccountPlainText = 'Create New Account';
   static const String alreadyHaveAnAccountPlainText = 'Already have an account?';
   static const String namePlainText = 'Name';
+  static const String productListPlainText = 'Product List';
+  static const String filterPlainText = 'Filter';
+  static const String sortByPlainText = 'Sort by';
 }

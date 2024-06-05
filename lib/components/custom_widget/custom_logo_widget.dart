@@ -8,6 +8,6 @@ class CustomLogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(imagePath,width: width,height: 120,);
+    return Image.asset(imagePath,width: width);
   }
 }

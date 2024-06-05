@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: CustomLogoWidget(
                 // width: AppConstant.size100,
                 width: 100,
-                imagePath: AppConstant.personPath,
+                imagePath: AppConstant.personLogoPath,
               ),
             ),
             Container(
@@ -100,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // mainAxisAlignment: MainAxisAlignment,
       children: [
         CustomTextField(
-          imagePath: AppConstant.personPath,
+          imagePath: AppConstant.personLogoPath,
           hint: AppString.namePlainText,
           controller: nameController,
         ),
