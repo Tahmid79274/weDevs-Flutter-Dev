@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:wedevs_flutter_dev/components/custom_view/customBoxShadowTextField.dart';
-import 'package:wedevs_flutter_dev/components/custom_widget/custom_logo_widget.dart';
-import 'package:wedevs_flutter_dev/utils/color/app_color.dart';
-import 'package:wedevs_flutter_dev/utils/style/style.dart';
-import 'package:rate_in_stars/rate_in_stars.dart';
+import 'package:flutter/services.dart';
+import '../../components/custom_view/customBoxShadowTextField.dart';
+import '../../components/custom_widget/custom_checkbox.dart';
+import '../../components/custom_widget/custom_logo_widget.dart';
+import '../../data/products/model/product_model.dart';
+import '../../utils/color/app_color.dart';
+import '../../utils/style/style.dart';
+import '../../components/custom_widget/product_details.dart';
 import '../../utils/string/string.dart';
 import '../../utils/values/app_constant.dart';
+import 'dart:io';
+import 'dart:convert';
+
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
@@ -14,6 +20,45 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  bool isNewest = false;
+  bool isOldest = false;
+  bool isLow = false;
+  bool isHigh = false;
+  bool isBestSelling = false;
+
+  List<ProductModel> products = [];
+  late Future<List<ProductModel>> getProducts;
+
+  Future<List<ProductModel>> getProductList() async{
+    String jsonString = await rootBundle.loadString(AppConstant.productJsonPath);
+    List<dynamic> jsonData = jsonDecode(jsonString);
+    products.clear();
+    for (int i = 0; i < jsonData.length; i++) {
+      products.add(ProductModel(
+          id: jsonData[i]['id'].toString(),
+          name: jsonData[i]['name'].toString(),
+          slug: jsonData[i]['slug'].toString(),
+          dateCreated:  DateTime.parse(jsonData[i]['date_created'].toString()),
+          shortDescription: jsonData[i]['short_description'].toString(),
+          totalSales: jsonData[i]['total_sales'].toString(),
+          imageLink: jsonData[i]['images'][0]['src'].toString(),
+          rating: jsonData[i]['average_rating'].toString(),
+          regularPrice: jsonData[i]['regular_price'].toString(),
+          salePrice: jsonData[i]['sale_price'].toString()));
+      DateTime date = DateTime.parse(jsonData[i]['date_created']);
+      print('${jsonData[i]['name']} has purchased at  $date');
+    }
+    // products = so
+    return products;
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    getProducts = getProductList();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,94 +67,180 @@ class _ProductsScreenState extends State<ProductsScreen> {
         elevation: 0,
         backgroundColor: AppColors.white,
         centerTitle: true,
-        title: Text(AppString.productListPlainText,
-          style: AppStyle.styleBoldPortGore,),
+        title: Text(
+          AppString.productListPlainText,
+          style: AppStyle.styleBoldPortGore,
+        ),
         actions: [
-          Icon(Icons.search,color: AppColors.portGore,)
+          Icon(
+            Icons.search,
+            color: AppColors.portGore,
+          )
         ],
       ),
-      body: Column(
-        children: [
-          filterSection(),
-          productListSection(),
-        ],
-      ),
-    );
-  }
-
-  Widget filterSection(){
-    return CustomBoxShadow(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomLogoWidget(imagePath: AppConstant.filterLogoPath, width: AppConstant.size20),
-              SizedBox(width: AppConstant.size10,),
-              Text(AppString.filterPlainText,style: AppStyle.styleNormalOsloGrey20,),
-            ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(AppString.sortByPlainText,style: AppStyle.styleNormalOsloGrey20,),
-              SizedBox(width: AppConstant.size10,),
-              Icon(Icons.keyboard_arrow_down,color: AppColors.osloGrey,),
-              SizedBox(width: AppConstant.size20,),
-              Icon(Icons.format_list_bulleted_outlined)
-            ],
-            ),
+            filterSection(),
+            productListSection(),
           ],
         ),
       ),
     );
   }
 
-  Widget productListSection(){
-    return GridView(
-        shrinkWrap: true,
-        physics: AlwaysScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-    children: [
-      Card(
-        color: AppColors.osloGrey,
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(child: Image.network('https://static.wikia.nocookie.net/gotekken/images/1/19/Link_-_Super_Smash_Bros._Ultimate.png/revision/latest/scale-to-width-down/1000?cb=20200803170049')),
-            Padding(padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget filterSection() {
+    return CustomBoxShadow(
+      child: InkWell(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+            backgroundColor: AppColors.white,
+            builder: (context) {
+              return StatefulBuilder(builder: (context, setState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Divider(
+                      indent: 150,
+                      endIndent: 150,
+                      color: AppColors.pastelPink,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                          width: 15,
+                        ),
+                        Text(
+                          AppString.filterPlainText,
+                          style: AppStyle.styleBoldBlack20,),
+                      ],
+                    ),
+                    CustomCheckbox(
+                      value: isNewest,
+                      content: AppString.newestPlainText,
+                      onChangedAction: (p0) {
+                        print('p0:$p0');
+                      },
+                    ),
+                    CustomCheckbox(
+                      value: isOldest,
+                      content: AppString.oldestPlainText,
+                      onChangedAction: (p0) {
+                        print('p0:$p0');
+                      },
+                    ),
+                    CustomCheckbox(
+                      value: isLow,
+                      content: AppString.lowToHighPlainText,
+                      onChangedAction: (p0) {
+                        print('p0:$p0');
+                      },
+                    ),
+                    CustomCheckbox(
+                      value: isHigh,
+                      content: AppString.highToLowPlainText,
+                      onChangedAction: (p0) {
+                        print('p0:$p0');
+                      },
+                    ),
+                    CustomCheckbox(
+                      value: isBestSelling,
+                      content: AppString.bestSellingPlainText,
+                      onChangedAction: (p0) {
+                        print('p0:$p0');
+                      },
+                    ),
+                  ],
+                );
+              },);
+            },
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('A boy with Sword trying to protect his wife. He will figt with the dragon',maxLines: 2,overflow: TextOverflow.fade,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('\$120'),
-                      SizedBox(width: 10,),
-                      Text('\$90',style: TextStyle(fontWeight: FontWeight.bold),),
-                    ],
+                  CustomLogoWidget(
+                      imagePath: AppConstant.filterLogoPath,
+                      width: AppConstant.size20),
+                  SizedBox(
+                    width: AppConstant.size10,
                   ),
-                  Flexible(child: RatingStars(rating: 3.5, editable: false,))
+                  Text(
+                    AppString.filterPlainText,
+                    style: AppStyle.styleNormalOsloGrey20,
+                  ),
                 ],
               ),
-            )
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppString.sortByPlainText,
+                    style: AppStyle.styleNormalOsloGrey20,
+                  ),
+                  SizedBox(
+                    width: AppConstant.size10,
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_down,
+                    color: AppColors.osloGrey,
+                  ),
+                  SizedBox(
+                    width: AppConstant.size20,
+                  ),
+                  Icon(Icons.format_list_bulleted_outlined)
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-    ],
     );
   }
 
+  Widget productListSection() {
+    return FutureBuilder<List<ProductModel>>(future: getProducts,
+        builder: (context, snapshot) {
+          if(snapshot.connectionState==ConnectionState.waiting){
+            return Center(child: CircularProgressIndicator(
+              color: AppColors.carnation,
+            ),);
+          }else if(snapshot.hasError){
+            return Center(child: Text('No Data Found'),);
+          }else{
+            return GridView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return ProductDetails(
+                  description: snapshot.data![index].shortDescription,
+                  imageLink: snapshot.data![index].imageLink,
+                  price: snapshot.data![index].regularPrice,
+                  rating: double.parse(snapshot.data![index].rating),
+                  salePrice: snapshot.data![index].salePrice,
+                  totalSales: double.parse(snapshot.data![index].totalSales),
+                  showRating: snapshot.data![index].showRating,
+                );
+              },
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 2, childAspectRatio: 0.65),
+            );
+          }
+        },);
+  }
 }

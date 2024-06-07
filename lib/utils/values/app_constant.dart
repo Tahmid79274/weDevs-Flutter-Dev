@@ -9,6 +9,9 @@ abstract class AppConstant {
   static const String personLogoPath = '$imageBasePath/person_logo.png';
   static const String filterLogoPath = '$imageBasePath/filter_logo.png';
 
+  //json path
+  static const String productJsonPath = 'assets/response/response.json';
+
   //size
   static const double size10 = 10.0;
   static const double size15 = 15.0;

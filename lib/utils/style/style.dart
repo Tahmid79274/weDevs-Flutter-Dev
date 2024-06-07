@@ -12,4 +12,12 @@ abstract class AppStyle{
   static const TextStyle styleBoldCurious20 = TextStyle(fontWeight: FontWeight.bold,color: AppColors.curiousBlue,fontSize: AppConstant.size20,);
   static const TextStyle styleBoldPortGore = TextStyle(fontWeight: FontWeight.bold, color: AppColors.portGore);
   static const TextStyle styleNormalOsloGrey20 = TextStyle(fontWeight: FontWeight.normal,color: AppColors.osloGrey,fontSize: AppConstant.size20);
+  static const TextStyle styleBoldBlack20 = TextStyle(
+      fontSize: AppConstant.size20,
+      fontWeight: FontWeight.bold,
+      color: AppColors.black);
+  static const TextStyle styleNormalOsloGrey15 = TextStyle(
+      fontSize: AppConstant.size15,
+      fontWeight: FontWeight.normal,
+      color: AppColors.osloGrey);
 }

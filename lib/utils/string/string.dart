@@ -12,4 +12,9 @@ abstract class AppString{
   static const String productListPlainText = 'Product List';
   static const String filterPlainText = 'Filter';
   static const String sortByPlainText = 'Sort by';
+  static const String newestPlainText = 'Newest';
+  static const String oldestPlainText = 'Oldest';
+  static const String lowToHighPlainText = 'Price low > High';
+  static const String highToLowPlainText = 'Price High > low';
+  static const String bestSellingPlainText = 'Best selling';
 }
