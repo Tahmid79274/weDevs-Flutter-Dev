@@ -12,6 +12,8 @@ abstract class AppConstant {
   //json path
   static const String productJsonPath = 'assets/response/response.json';
 
+  //memory variables
+  static const String memoryToken = 'token';
   //size
   static const double size10 = 10.0;
   static const double size15 = 15.0;

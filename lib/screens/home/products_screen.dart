@@ -48,7 +48,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       DateTime date = DateTime.parse(jsonData[i]['date_created']);
       print('${jsonData[i]['name']} has purchased at  $date');
     }
-    // products = so
+    //products.sort((a,b) => a.dateCreated.compareTo(b.dateCreated) );
     return products;
   }
 
