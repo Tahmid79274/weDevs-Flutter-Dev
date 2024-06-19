@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:wedevs_flutter_dev/components/custom_widget/custom_button.dart';
 import 'package:wedevs_flutter_dev/utils/string/string.dart';
 import 'package:wedevs_flutter_dev/utils/style/style.dart';
 import 'package:wedevs_flutter_dev/utils/values/app_constant.dart';
 
 import '../../components/custom_view/customBoxShadowTextField.dart';
+import '../../components/custom_view/custom_views.dart';
 import '../../components/custom_widget/custom_logo_widget.dart';
 import '../../components/custom_widget/custom_social_media_button.dart';
 import '../../components/custom_widget/custom_text_field.dart';
@@ -49,20 +51,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          uploadImageSection(),
-          SizedBox(height: 30,),
-          createAccountSection(),
-          SizedBox(height: 20,),
-          socialAuthenticationSection(),
-          SizedBox(height: 10,),
-          alreadyHaveAnAccountSection(),
-          SizedBox(height: 30,),
-        ],
-      ),
+      body: SingleChildScrollView(child: initBuildUi(height,width))
+    );
+  }
+
+  Widget initBuildUi(double height,double width){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomViews.sizedBoxHeight(height*0.1),
+        uploadImageSection(),
+        CustomViews.sizedBoxHeight(height*0.05),
+        createAccountSection(),
+        CustomViews.sizedBoxHeight(height*0.05),
+        socialAuthenticationSection(),
+        CustomViews.sizedBoxHeight(height*0.05),
+        alreadyHaveAnAccountSection(),
+        CustomViews.sizedBoxHeight(height*0.05),
+      ],
     );
   }
 
@@ -125,9 +134,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           showPasswordText: !confirmShowPass,
           showPasswordFunction: showConfirmPasswordOrNot,
         ),
-        SizedBox(height: 30,),
+        SizedBox(height: AppConstant.size45,),
         CustomButton(
             content: AppString.signUpPlainText,
+            width: 0.8,
+            backgroundColor: AppColors.carnation,
+            borderColor: AppColors.carnation,
+            contentStyle: AppStyle.styleNormalWhite25,
             onTapAction: (){}),
       ],
     );

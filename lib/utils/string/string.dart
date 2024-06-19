@@ -3,6 +3,15 @@ abstract class AppString{
   static const String signUpPlainText = 'Sign Up';
   static const String logInPlainText = 'Login';
   static const String emailPlainText = 'Email';
+  static const String exampleEmailPlainText = 'youremail@xmail.com';
+  static const String fullNamePlainText = 'Full Name';
+  static const String exampleFullNamePlainText = 'William Bennett';
+  static const String streetAddressPlainText = 'Street Address';
+  static const String exampleStreetAddressPlainText = '465 Nolan Causeway Suite 079';
+  static const String apartmentPlainText = 'Apt, Suite, Bldg (optional)';
+  static const String exampleApartmentPlainText = 'Unit 512';
+  static const String zipCodePlainText = 'Zip Code';
+  static const String exampleZipCodePlainText = '77017';
   static const String passwordPlainText = 'Password';
   static const String confirmPasswordPlainText = 'Confirm Password';
   static const String forgotPasswordPlainText = 'Forgot Password?';
@@ -17,4 +26,11 @@ abstract class AppString{
   static const String lowToHighPlainText = 'Price low > High';
   static const String highToLowPlainText = 'Price High > low';
   static const String bestSellingPlainText = 'Best selling';
+  static const String myAccountPlainText = 'My Account';
+  static const String accountPlainText = 'Account';
+  static const String notificationPlainText = 'Notification';
+  static const String wishlistPlainText = 'Wishlist (00)';
+  static const String applyPlainText = 'Apply';
+  static const String cancelPlainText = 'Cancel';
+  static const String savePlainText = 'Save';
 }

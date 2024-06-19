@@ -14,4 +14,7 @@ abstract class AppColors{
   static const Color pastelPink = Color(0xFFFFD3DD);
   static const Color mountainMeadow = Color(0xFF1ABC9C);
   static const Color geyser = Color(0xFFD2DBE0);
+  static const Color cornflowerLilac = Color(0xFFFFADAD);
+  static const Color emperor = Color(0xFF535353);
+  static const Color regentGray = Color(0xFF899AA2);
 }

@@ -8,6 +8,8 @@ abstract class AppConstant {
   static const String googleLogoPath = '$imageBasePath/google_logo.png';
   static const String personLogoPath = '$imageBasePath/person_logo.png';
   static const String filterLogoPath = '$imageBasePath/filter_logo.png';
+  static const String notificationLogoPath = '$imageBasePath/notification_logo.png';
+  static const String wishlistLogoPath = '$imageBasePath/wishlist_logo.png';
 
   //json path
   static const String productJsonPath = 'assets/response/response.json';
@@ -20,6 +22,7 @@ abstract class AppConstant {
   static const double size20 = 20.0;
   static const double size25 = 25.0;
   static const double size30 = 30.0;
+  static const double size45 = 45.0;
   static const double size90 = 90.0;
 
   static const double size200 = 200.0;

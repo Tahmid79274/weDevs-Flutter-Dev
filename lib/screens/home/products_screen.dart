@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wedevs_flutter_dev/components/custom_widget/custom_button.dart';
 import '../../components/custom_view/customBoxShadowTextField.dart';
 import '../../components/custom_widget/custom_checkbox.dart';
 import '../../components/custom_widget/custom_logo_widget.dart';
@@ -155,6 +156,28 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         print('p0:$p0');
                       },
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CustomButton(content: AppString.cancelPlainText, width: 0.45,
+                              onTapAction: (){}, backgroundColor: AppColors.white,
+                              borderColor: AppColors.geyser,
+                              contentStyle: AppStyle.styleNormalOsloGrey20),
+                          SizedBox(width: AppConstant.size10,),
+                          CustomButton(content: AppString.applyPlainText, width: 0.45,
+                              onTapAction: (){}, backgroundColor: AppColors.mountainMeadow,
+                              borderColor: AppColors.mountainMeadow,
+                            contentStyle: AppStyle.styleNormalWhite20,
+                            // contentStyle: TextStyle(
+                              //   color: AppColors.white,
+                              // )
+                          ),
+                        ],
+                      ),
+                    ),SizedBox(height: 10,)
                   ],
                 );
               },);

@@ -23,7 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: initBuildUi(),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.carnation,
         shape: CircleBorder(),
         child: Icon(
@@ -37,7 +37,7 @@ class _BaseScreenState extends State<BaseScreen> {
           // _fabAnimationController.forward();
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,*/
         bottomNavigationBar: AnimatedBottomNavigationBar(
           icons: [
             Icons.home_outlined,
