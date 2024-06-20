@@ -1,16 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wedevs_flutter_dev/components/custom_widget/custom_button.dart';
+import 'package:wedevs_flutter_dev/screens/auth/sign_in_screen.dart';
 import 'package:wedevs_flutter_dev/utils/string/string.dart';
 import 'package:wedevs_flutter_dev/utils/style/style.dart';
 import 'package:wedevs_flutter_dev/utils/values/app_constant.dart';
 
 import '../../components/custom_view/customBoxShadowTextField.dart';
+import '../../components/custom_view/custom_loader.dart';
+import '../../components/custom_view/custom_response_status.dart';
 import '../../components/custom_view/custom_views.dart';
 import '../../components/custom_widget/custom_logo_widget.dart';
 import '../../components/custom_widget/custom_social_media_button.dart';
 import '../../components/custom_widget/custom_text_field.dart';
+import '../../network/client/base_client.dart';
+import '../../network/service/service_api.dart';
 import '../../utils/color/app_color.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -116,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         CustomTextField(
           imagePath: AppConstant.emailLogoPath,
           hint: AppString.emailPlainText,
-          controller: nameController,
+          controller: emailController,
         ),
         CustomPasswordField(
           controller: passwordController,
@@ -141,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             backgroundColor: AppColors.carnation,
             borderColor: AppColors.carnation,
             contentStyle: AppStyle.styleNormalWhite25,
-            onTapAction: (){}),
+            onTapAction: signupFunction),
       ],
     );
   }
@@ -166,4 +173,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+
+  Future<void> signupFunction ()async{
+    CustomLoader.showLoader(context);
+    String message = '';
+
+    final Map<String, String> body = {'username': nameController.text, "email": emailController.text,'password': passwordController.text};
+    final Map<String, String> headers = {"Content-Type": "application/json"};
+
+    try {
+      final responseWithStatusCode = await BaseClient.postFunction(ServiceApi.registrationEndPoint,jsonEncode(body),headers);
+
+      CustomLoader.removeLoader(context);
+
+      if(responseWithStatusCode != null){
+        final data = jsonDecode(responseWithStatusCode.last);
+        print('data:$data');
+        message = data['message'];
+        if(responseWithStatusCode.first == 200){
+          CustomResponseStatus.showResponseStatus(context, message, AppColors.green);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SignInScreen()),);
+        }
+        else{
+          // message = data['code'].toString().split(' ').last.replaceAll('_', ' ');
+          CustomResponseStatus.showResponseStatus(context, message, AppColors.carnation);
+        }
+      }
+      else{
+        CustomResponseStatus.showResponseStatus(context, 'Something went wrong!!!', AppColors.carnation);
+      }
+    } catch (error) {
+      // Handle exceptions (e.g., network issues)
+      print('Login error: $error');
+    }
+
+    /*if(message !=''){
+
+    }*/
+  }
+
 }

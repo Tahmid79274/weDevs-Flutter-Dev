@@ -8,7 +8,7 @@ class BaseClient {
 
   get httpClient => null;
 
-  static Future<List<dynamic>?> postFunction(String urlLink,Map<String, String> body,Map<String, String> header)async{
+  static Future<List<dynamic>?> postFunction(String urlLink,dynamic body,Map<String, String> header)async{
     // final Uri url = Uri.parse(ServiceApi.loginEndPoint);
     final Uri url = Uri.parse(urlLink);
     //print('Url:$url');
@@ -16,11 +16,11 @@ class BaseClient {
 
     try {
       final response = await http.post(url, body: body, headers: header).timeout(Duration(seconds: TIME_OUT));
-
+      print('Response:${response.body}');
       return [response.statusCode,response.body];
     } catch (error) {
       // Handle exceptions (e.g., network issues)
-      print('Login error: $error');
+      print('Error: $error');
     }
     return null;
   }

@@ -143,7 +143,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
     try {
       final responseWithStatusCode = await BaseClient.postFunction(ServiceApi.loginEndPoint,body,headers);
-
       if(responseWithStatusCode != null){
         final data = jsonDecode(responseWithStatusCode.last);
         if(responseWithStatusCode.first == 200){
