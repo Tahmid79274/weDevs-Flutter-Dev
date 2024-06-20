@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wedevs_flutter_dev/components/custom_widget/custom_button.dart';
+import '../../components/custom_widget/custom_button.dart';
 import '../../components/custom_view/customBoxShadowTextField.dart';
 import '../../components/custom_widget/custom_checkbox.dart';
 import '../../components/custom_widget/custom_logo_widget.dart';
@@ -10,7 +10,6 @@ import '../../utils/style/style.dart';
 import '../../components/custom_widget/product_details.dart';
 import '../../utils/string/string.dart';
 import '../../utils/values/app_constant.dart';
-import 'dart:io';
 import 'dart:convert';
 
 class ProductsScreen extends StatefulWidget {
@@ -30,6 +29,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
   List<ProductModel> products = [];
   late Future<List<ProductModel>> getProducts;
 
+  Future<List<ProductModel>> getFilteredProductList() async {
+    List<ProductModel> filteredProducts = products;
+    if(isNewest){
+      filteredProducts.sort((a, b) => a.dateCreated.compareTo(b.dateCreated),);
+    }
+    else if(isOldest){
+      filteredProducts.sort((a, b) => b.dateCreated.compareTo(a.dateCreated),);
+    }
+    else if(isLow){
+      filteredProducts.sort((a,b)=> b.salePrice.compareTo(a.salePrice));
+    }
+    else if(isHigh){
+      filteredProducts.sort((a,b)=> a.salePrice.compareTo(b.salePrice));
+    }
+    else if(isBestSelling){
+      filteredProducts.sort((a,b)=> b.totalSales.compareTo(a.totalSales));
+    }
+    return filteredProducts;
+  }
   Future<List<ProductModel>> getProductList() async{
     String jsonString = await rootBundle.loadString(AppConstant.productJsonPath);
     List<dynamic> jsonData = jsonDecode(jsonString);
@@ -125,28 +143,36 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       value: isNewest,
                       content: AppString.newestPlainText,
                       onChangedAction: (p0) {
-                        print('p0:$p0');
+                        setState((){
+                          isNewest=p0!;
+                        });
                       },
                     ),
                     CustomCheckbox(
                       value: isOldest,
                       content: AppString.oldestPlainText,
                       onChangedAction: (p0) {
-                        print('p0:$p0');
+                        setState((){
+                          isOldest=p0!;
+                        });
                       },
                     ),
                     CustomCheckbox(
                       value: isLow,
                       content: AppString.lowToHighPlainText,
                       onChangedAction: (p0) {
-                        print('p0:$p0');
+                        setState((){
+                          isLow=p0!;
+                        });
                       },
                     ),
                     CustomCheckbox(
                       value: isHigh,
                       content: AppString.highToLowPlainText,
                       onChangedAction: (p0) {
-                        print('p0:$p0');
+                        setState((){
+                          isHigh=p0!;
+                        });
                       },
                     ),
                     CustomCheckbox(
@@ -163,12 +189,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CustomButton(content: AppString.cancelPlainText, width: 0.45,
-                              onTapAction: (){}, backgroundColor: AppColors.white,
+                              onTapAction: (){
+                            Navigator.of(context,rootNavigator: true).pop();
+                              }, backgroundColor: AppColors.white,
                               borderColor: AppColors.geyser,
                               contentStyle: AppStyle.styleNormalOsloGrey20),
                           SizedBox(width: AppConstant.size10,),
                           CustomButton(content: AppString.applyPlainText, width: 0.45,
-                              onTapAction: (){}, backgroundColor: AppColors.mountainMeadow,
+                              onTapAction: (){
+                                Navigator.of(context,rootNavigator: true).pop();
+                            setState((){
+                              getProducts = getFilteredProductList();
+                            });
+                              }, backgroundColor: AppColors.mountainMeadow,
                               borderColor: AppColors.mountainMeadow,
                             contentStyle: AppStyle.styleNormalWhite20,
                             // contentStyle: TextStyle(
